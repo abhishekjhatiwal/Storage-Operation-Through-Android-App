@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Android(Storage"
+rootProject.name = "AndroidStorage"
 include(":app")
