@@ -10,11 +10,6 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 
-    <!-- For Android 10 (API 29) if targeting legacy external storage -->
-<!--    <uses-permission-->
-<!--        android:name="android.permission.READ_EXTERNAL_STORAGE"-->
-<!--        android:maxSdkVersion="29" />-->
-
     <!-- For Android 13 (API 33) and above -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
@@ -34,6 +29,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidStorage">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -41,10 +37,10 @@
             android:theme="@style/Theme.AndroidStorage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
