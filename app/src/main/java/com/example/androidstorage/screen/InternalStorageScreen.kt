@@ -108,7 +108,7 @@ fun InternalStorageScreen(padding: PaddingValues) {
     }
 }
 
-const val DIRECTORY_NAME = "DecodeAndroid"
+const val DIRECTORY_NAME = "abhishek_jhatiwal"
 
 fun Context.createIntDirectory(): File {
     val directory = filesDir
