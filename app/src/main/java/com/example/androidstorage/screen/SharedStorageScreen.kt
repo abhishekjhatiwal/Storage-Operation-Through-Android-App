@@ -54,12 +54,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.example.androidstorage.data.FileInfo
 import java.io.File
 import java.io.OutputStreamWriter
-
-data class FileInfo(
-    val fileName: String, val fileSize: Long, val mimeType: String = ""
-)
 
 @Composable
 fun SharedStorageScreen(padding: PaddingValues) {
