@@ -15,7 +15,7 @@ fun Context.updateViaMediaStore(name: String, content: String) {
         val projection = arrayOf(MediaStore.MediaColumns._ID)
         val selection = "${MediaStore.MediaColumns.DISPLAY_NAME} = ?"
         val selectionArgs = arrayOf(name)
-        val pathUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL) // ✅ Scoped Storage
+        val pathUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL) //  Scoped Storage
         val cursor = contentResolver.query(pathUri, projection, selection, selectionArgs, null)
 
         var updateUri = "".toUri()
