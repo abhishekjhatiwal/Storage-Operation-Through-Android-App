@@ -13,48 +13,35 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.androidstorage.data.FileInfo
+import com.example.androidstorage.dialogscreen.FileOperationDialog
+import com.example.androidstorage.dialogscreen.MediaStoreListItem
 import java.io.File
 import java.io.OutputStreamWriter
 
@@ -161,7 +148,8 @@ fun SharedStorageScreen(padding: PaddingValues) {
         ) {
             // Content Display Dialog
             if (showContentDialog) {
-                AlertDialog(onDismissRequest = { showContentDialog = false },
+                AlertDialog(
+                    onDismissRequest = { showContentDialog = false },
                     title = { Text("File Content") },
                     text = { Text(fileContent) },
                     confirmButton = {
@@ -264,130 +252,6 @@ fun Context.saveViaMediaStore(uri: Uri, content: String) {
     }
 }
 
-@Composable
-fun FileOperationDialog(
-    initialName: String,
-    initialContent: String,
-    onDismiss: () -> Unit,
-    onCreateWithSAF: (String, String) -> Unit,
-    onCreateWithMediaStore: (String, String) -> Unit,
-    onUpdate: (String, String) -> Unit,
-    isEditMode: Boolean
-) {
-    var fileName by remember { mutableStateOf(initialName) }
-    var content by remember { mutableStateOf(initialContent) }
-
-    AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(if (isEditMode) "Edit File" else "Create File") },
-        text = {
-            Column {
-                TextField(value = fileName,
-                    onValueChange = { fileName = it },
-                    label = { Text("File name") },
-                    enabled = !isEditMode
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                TextField(value = content,
-                    onValueChange = { content = it },
-                    label = { Text("Content") },
-                    modifier = Modifier.height(150.dp)
-                )
-            }
-        },
-        confirmButton = {
-            Column {
-                if (isEditMode) {
-                    Button(onClick = { onUpdate(fileName, content) }) {
-                        Text("Update File")
-                    }
-                } else {
-                    Button(onClick = { onCreateWithSAF(fileName, content) }) {
-                        Text("Save via SAF")
-                    }
-                    Button(onClick = { onCreateWithMediaStore(fileName, content) }) {
-                        Text("Save via MediaStore")
-                    }
-                }
-                Button(onClick = onDismiss) {
-                    Text("Cancel")
-                }
-            }
-        })
-}
-
-@Composable
-fun MediaStoreListItem(
-    fileInfo: FileInfo, onDelete: () -> Unit, onEdit: () -> Unit, onView: () -> Unit
-) {
-    val sizeBytes = fileInfo.fileSize
-
-    val fileSize = when {
-        sizeBytes > 1_000_000 -> "${sizeBytes / 1_000_000} MB"
-        sizeBytes > 1_000 -> "${sizeBytes / 1_000} KB"
-        else -> "$sizeBytes bytes"
-    }
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable { onView() },
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = fileInfo.fileName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = fileSize, style = MaterialTheme.typography.bodySmall, color = Color.Gray
-                )
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-
-                // Edit Icon
-                IconButton(
-                    onClick = onEdit, modifier = Modifier.size(24.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit file",
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
-                }
-
-                // Delete Icon
-                IconButton(
-                    onClick = onDelete, modifier = Modifier.size(24.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete file",
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
-        }
-    }
-
-
-}
-
 
 //helper function to get file uri info
 fun Context.getMediaFileInfo(uri: Uri): FileInfo {
@@ -435,9 +299,7 @@ fun Context.queryMediaStoreFiles(): List<Uri> {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         // For API 29 and above, use MediaStore query with RELATIVE_PATH
 
-        val projection = arrayOf(
-            MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.RELATIVE_PATH
-        )
+        val projection = arrayOf(MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.RELATIVE_PATH)
         val selection = "${MediaStore.Files.FileColumns.RELATIVE_PATH} LIKE ?"
         val selectionArgs = arrayOf("%/DecodeAndroid/%")
         val pathUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
