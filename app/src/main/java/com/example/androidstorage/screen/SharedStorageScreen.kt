@@ -40,8 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.androidstorage.data.FileInfo
-import com.example.androidstorage.dialogscreen.FileOperationDialog
-import com.example.androidstorage.dialogscreen.MediaStoreListItem
+import com.example.androidstorage.screen.dialogscreen.FileOperationDialog
+import com.example.androidstorage.screen.dialogscreen.MediaStoreListItem
 import java.io.File
 import java.io.OutputStreamWriter
 
@@ -301,7 +301,7 @@ fun Context.queryMediaStoreFiles(): List<Uri> {
 
         val projection = arrayOf(MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.RELATIVE_PATH)
         val selection = "${MediaStore.Files.FileColumns.RELATIVE_PATH} LIKE ?"
-        val selectionArgs = arrayOf("%/DecodeAndroid/%")
+        val selectionArgs = arrayOf("%/AbhishekJhatiwal/%")
         val pathUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
 
         this.contentResolver.query(
@@ -316,9 +316,8 @@ fun Context.queryMediaStoreFiles(): List<Uri> {
         files
     } else {
         // For API 28 and below, fall back to using the File API
-        val downloadsDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val targetFolder = File(downloadsDir, "DecodeAndroid")
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val targetFolder = File(downloadsDir, "AbhishekJhatiwal")
         if (targetFolder.exists()) {
             targetFolder.listFiles()?.forEach { file ->
                 // Create a file URI for each file

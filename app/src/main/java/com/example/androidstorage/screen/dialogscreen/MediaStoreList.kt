@@ -1,4 +1,4 @@
-package com.example.androidstorage.dialogscreen
+package com.example.androidstorage.screen.dialogscreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

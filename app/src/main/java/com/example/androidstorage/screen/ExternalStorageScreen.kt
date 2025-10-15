@@ -24,7 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.example.androidstorage.dialogscreen.FileListItem
+import com.example.androidstorage.screen.dialogscreen.FileListItem
 import java.io.File
 
 

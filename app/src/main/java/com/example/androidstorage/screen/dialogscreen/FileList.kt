@@ -1,4 +1,4 @@
-package com.example.androidstorage.dialogscreen
+package com.example.androidstorage.screen.dialogscreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
