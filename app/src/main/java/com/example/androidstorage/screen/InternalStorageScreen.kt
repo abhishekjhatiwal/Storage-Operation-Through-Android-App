@@ -117,30 +117,6 @@ fun Context.createIntDirectory(): File {
     return file
 }
 
-@Composable
-fun FileListItem(file: File, onDelete: () -> Unit, onEdit: () -> Unit) {
-    Card(modifier = Modifier.padding(8.dp)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(file.name.replace(".txt", ""), fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                Text(file.readText(), fontWeight = FontWeight.Light, fontSize = 18.sp)
-                Text("${file.length()} bytes", fontWeight = FontWeight.Normal, fontSize = 18.sp)
-            }
-            IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, "Edit")
-            }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, "Delete")
-            }
-        }
-    }
-}
-
 // CommonDialog.kt
 @Composable
 fun FileDialog(
