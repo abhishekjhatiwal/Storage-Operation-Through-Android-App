@@ -1,14 +1,9 @@
 package com.example.androidstorage.screen
 
 import android.Manifest
-import android.content.ContentUris
-import android.content.ContentValues
-import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -39,12 +34,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.example.androidstorage.data.FileInfo
 import com.example.androidstorage.screen.dialogscreen.FileOperationDialog
 import com.example.androidstorage.screen.dialogscreen.MediaStoreListItem
-import java.io.File
-import java.io.OutputStreamWriter
-import androidx.core.net.toUri
 import com.example.androidstorage.domain.deleteViaMediaStore
 import com.example.androidstorage.domain.getMediaFileInfo
 import com.example.androidstorage.domain.queryMediaStoreFiles

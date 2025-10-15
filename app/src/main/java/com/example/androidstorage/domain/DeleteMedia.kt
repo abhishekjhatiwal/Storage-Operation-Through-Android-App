@@ -2,7 +2,6 @@ package com.example.androidstorage.domain
 
 import android.content.ContentUris
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
